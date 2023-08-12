@@ -2,6 +2,8 @@ import pinecone
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
 # initialize pinecone
 pinecone.init(
     api_key=os.environ.get('PINECONE_API_KEY'),
