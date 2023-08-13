@@ -5,6 +5,9 @@ from langchain.vectorstores import Pinecone
 import os
 from dotenv import load_dotenv
 import pinecone
+import pinecone_setup
+
+load_dotenv()
 
 try:
     # load the pdf
@@ -17,21 +20,24 @@ try:
         chunk_overlap=200
     )
     documents = text_splitter.split_documents(raw_file)
+    print('docs loaded and split')
 
-    # # sanity check
-    # with open('sample.txt', 'w') as file:
-    #     for s in split_text:
-    #         file.write(s.page_content)
-    #         file.write('\n --section--\n')
+    # sanity check
+    with open('sample.txt', 'w') as file:
+        for d in documents:
+            file.write(str(d))
+            file.write('\n --section--\n')
 
     # initialize embeddings model
     embeddings = OpenAIEmbeddings()
 
     # pinecone
-    load_dotenv()
-    index_name = os.environ.get("PINECONE_INDEX_NAME")
-    index = pinecone.Index(os.environ.get("PINECONE_INDEX_NAME"))
-    Pinecone.from_documents(documents, embeddings, index_name=index_name)
+    # pinecone_setup.pinecone_setup()
+    # index_name = os.environ.get("PINECONE_INDEX_NAME")
+    # index = pinecone.Index(index_name)
+    # print('creating embeddings and storing in pinecone')
+    # Pinecone.from_documents(documents, embeddings, index_name=index_name)
+    # print('Done!')
 
 except Exception as e:
     print('An error occurred:', e)
