@@ -41,14 +41,3 @@ try:
 
 except Exception as e:
     print('An error occurred:', e)
-
-
-"""
-First, load the pdf. Then, split it using some sort of mechanism. Turn it into embeddings then store it in Pinecone. (Ingestion step)
-
-Then, have it such that I develop a chain to answer questions by fetching from Pinecone DB.
-
-Then, create a frontend that can interact via chat (or honestly just Q&A)
-
-Possible extensions: Using agents, chat memory, attributions, model fine-tuning, fetching multiple documents
-"""
