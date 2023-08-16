@@ -3,8 +3,9 @@ import React from "react";
 const SendMessageBar = () => {
     return (
         <div>
-            <div className="relative mt-2 rounded-md shadow-sm">
+            <div className="flex flex-col w-full">
                 <input
+                    className=""
                     type="text"
                     name="message"
                     id="message"
