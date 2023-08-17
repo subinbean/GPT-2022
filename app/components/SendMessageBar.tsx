@@ -1,11 +1,25 @@
-import React from "react";
+"use client";
 
-const SendMessageBar = () => {
+import React, { useState } from "react";
+import { Message } from "../types/message";
+
+const SendMessageBar = (props: {
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+}) => {
+    const [query, setQuery] = useState("");
+
+    console.log(query);
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
+    };
+
     return (
         <div className="flex w-1/2 items-center my-4 mt-16 rounded-lg border">
             <input
                 type="text"
                 placeholder="Type a question!"
+                value={query}
+                onChange={handleInputChange}
                 className="flex-1 p-3 rounded-l-lg focus:outline-none"
             />
             <button className="p-3 text-slate-600 rounded-r-lg focus:outline-none">
