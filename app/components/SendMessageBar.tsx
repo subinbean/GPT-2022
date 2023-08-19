@@ -8,9 +8,16 @@ const SendMessageBar = (props: {
 }) => {
     const [query, setQuery] = useState("");
 
-    console.log(query);
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
+    };
+
+    const sendMessage = () => {
+        const userMessage: Message = {
+            content: query,
+            origin: "user",
+        };
+        props.setMessages((prevMessages) => [...prevMessages, userMessage]);
     };
 
     return (
@@ -22,7 +29,9 @@ const SendMessageBar = (props: {
                 onChange={handleInputChange}
                 className="flex-1 p-3 rounded-l-lg focus:outline-none"
             />
-            <button className="p-3 text-slate-600 rounded-r-lg focus:outline-none">
+            <button
+                onClick={sendMessage}
+                className="p-3 text-slate-600 rounded-r-lg focus:outline-none">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
