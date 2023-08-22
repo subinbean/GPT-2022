@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from generate_message import generate_message
+import sys
 
 app = Flask(__name__)
 CORS(app)
@@ -10,14 +11,17 @@ CORS(app)
 def generate_response():
     try:
         data = request.json
-        print(request)
-        print(data)
         query = data['query']
-        system_message = generate_message(query)
-        response = {"data": system_message}
-        return response, 200
+        generated_response = generate_message(query)
+        source_documents = []
+        for doc in generated_response['source_documents']:
+            source_documents.append(
+                {'page_content': doc.page_content, 'metadata': doc.metadata})
+        response = {
+            'result': generated_response['result'], 'source_documents': source_documents}
+        return jsonify(response), 200
     except Exception as e:
-        print('An error occurred:', e)
+        print('An error occurred:', e, flush=True)
 
 
 @app.route("/api/healthcheck", methods=["GET"])

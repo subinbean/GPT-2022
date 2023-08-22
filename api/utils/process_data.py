@@ -11,7 +11,7 @@ load_dotenv()
 
 try:
     # load the pdf
-    loader = PyPDFLoader('assets/Apple-10k-2022.pdf')
+    loader = PyPDFLoader('../../assets/Apple-10k-2022.pdf')
     raw_file = loader.load()
 
     # split up the raw text of pdf
@@ -31,13 +31,13 @@ try:
     # initialize embeddings model
     embeddings = OpenAIEmbeddings()
 
-    # pinecone
-    pinecone_setup.pinecone_setup()
-    index_name = os.environ.get("PINECONE_INDEX_NAME")
-    index = pinecone.Index(index_name)
-    print('creating embeddings and storing in pinecone')
-    Pinecone.from_documents(documents, embeddings, index_name=index_name)
-    print('Done!')
+    # # pinecone
+    # pinecone_setup.pinecone_setup()
+    # index_name = os.environ.get("PINECONE_INDEX_NAME")
+    # index = pinecone.Index(index_name)
+    # print('creating embeddings and storing in pinecone')
+    # Pinecone.from_documents(documents, embeddings, index_name=index_name)
+    # print('Done!')
 
 except Exception as e:
     print('An error occurred:', e)
