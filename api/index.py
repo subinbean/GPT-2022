@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from generate_message import generate_message
-import sys
 
 app = Flask(__name__)
 CORS(app)

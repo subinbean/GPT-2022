@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, use } from "react";
-import { Message } from "../types/message";
+import { Message } from "../types/types";
 
 const SendMessageBar = (props: {
     setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
@@ -12,13 +12,13 @@ const SendMessageBar = (props: {
         setQuery(event.target.value);
     };
 
-    const generateResponse = async (data) => {
+    const generateResponse = async (query) => {
         const res = await fetch("http://localhost:8000/api/generate-response", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(query),
         });
         const response = await res.json();
         console.log(response);
@@ -32,14 +32,13 @@ const SendMessageBar = (props: {
         };
         props.setMessages((prevMessages) => [...prevMessages, userMessage]);
         try {
-            console.log("it hit here");
             const response = await generateResponse({
                 query: userMessage.content,
             });
-            console.log(response);
             const gptMessage: Message = {
-                content: response["data"]["result"],
+                content: response["result"],
                 origin: "gpt",
+                citations: response["source_documents"],
             };
             props.setMessages((prevMessages) => [...prevMessages, gptMessage]);
         } catch (error) {

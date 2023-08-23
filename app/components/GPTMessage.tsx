@@ -1,15 +1,19 @@
 import React from "react";
+import { Document } from "../types/types";
 
-const GPTMessage = (props: { message: string }) => {
+const GPTMessage = (props: {
+    message: string;
+    citations: Document[] | undefined;
+}) => {
     return (
-        <div className="bg-gray-300 text-gray-700 h-auto p-10 flex">
+        <div className="bg-gray-300 text-gray-700 h-auto p-10 flex flex-col">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6 mr-3">
+                className="w-6 h-6">
                 <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -17,6 +21,13 @@ const GPTMessage = (props: { message: string }) => {
                 />
             </svg>
             {props.message}
+            {props.citations?.map((citation, index) => (
+                <div key={index}>
+                    {" "}
+                    Citation from page {citation.metadata.page} of{" "}
+                    {citation.metadata.source} <p> {citation.page_content} </p>{" "}
+                </div>
+            ))}
         </div>
     );
 };

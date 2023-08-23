@@ -30,6 +30,7 @@ def generate_message(query):
         # docs = vectorstore.similarity_search(question)
         # print(docs)
 
+        # template used to prompt the model
         template = """Use the following pieces of context to answer the question at the end. 
         If you don't know the answer, just say that you don't know, don't try to make up an answer.
         Always say "thanks for asking!" at the end of the answer. 
@@ -38,8 +39,11 @@ def generate_message(query):
         Helpful Answer:"""
 
         qa_chain_prompt = PromptTemplate.from_template(template)
+
+        # retrieves from vector store relevant documents and passes them as context to prompt
+        # k is the number of documents retrieved
         qa_chain = RetrievalQA.from_chain_type(
-            llm, retriever=vectorstore.as_retriever(), return_source_documents=True, chain_type_kwargs={"prompt": qa_chain_prompt})
+            llm, retriever=vectorstore.as_retriever(search_kwargs={'k': 2}), return_source_documents=True, chain_type_kwargs={"prompt": qa_chain_prompt})
 
         # print(qa_chain({"query": question}))
         return qa_chain({"query": query})
