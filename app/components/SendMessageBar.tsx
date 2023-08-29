@@ -4,6 +4,7 @@ import React, { useState, use } from "react";
 import { Message } from "../types/types";
 
 const SendMessageBar = (props: {
+    messages: Message[];
     setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 }) => {
     const [query, setQuery] = useState("");

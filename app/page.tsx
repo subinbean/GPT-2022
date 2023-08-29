@@ -24,7 +24,7 @@ export default function Page() {
                     )
                 )}
             </div>
-            <SendMessageBar setMessages={setMessages} />
+            <SendMessageBar messages={messages} setMessages={setMessages} />
         </main>
     );
 }
