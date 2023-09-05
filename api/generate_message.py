@@ -23,7 +23,7 @@ def generate_message(query):
         index = pinecone.Index(index_name)
         embeddings = OpenAIEmbeddings()
         vectorstore = Pinecone(
-            index, embedding=embeddings, text_key="text")
+            index, embedding=embeddings, namespace="Apple-10k-2022", text_key="text")
 
         # sanity check for retrieval
         # question = "What are some highlights for the fourth quarter of 2022?"
