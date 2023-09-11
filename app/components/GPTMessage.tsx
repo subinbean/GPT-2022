@@ -28,7 +28,7 @@ const GPTMessage = (props: {
                     <div key={index}>
                         {" "}
                         <b>
-                            Citation from page {citation.metadata.page} of
+                            Citation from page {citation.metadata.page} of{" "}
                             {citation.metadata.source}{" "}
                         </b>{" "}
                         <p> {citation.page_content} </p> <br></br>

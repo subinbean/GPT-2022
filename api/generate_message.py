@@ -11,7 +11,7 @@ import pinecone
 load_dotenv()
 
 
-def generate_message(query):
+def generate_message(query, past_messages):
     try:
         # creates open AI chat model using gpt 3.5 turbo (which is what chat gpt uses)
         # set temperature to whatever you want depending on how random / creative you want answers to be
@@ -46,6 +46,7 @@ def generate_message(query):
             llm, retriever=vectorstore.as_retriever(search_kwargs={'k': 2}), return_source_documents=True, chain_type_kwargs={"prompt": qa_chain_prompt})
 
         # print(qa_chain({"query": question}))
+        # print(past_messages, flush=True)
         return qa_chain({"query": query})
 
     except Exception as e:

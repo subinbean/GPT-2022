@@ -11,7 +11,8 @@ def generate_response():
     try:
         data = request.json
         query = data['query']
-        generated_response = generate_message(query)
+        past_messages = data['pastMessages']
+        generated_response = generate_message(query, past_messages)
         source_documents = []
         for doc in generated_response['source_documents']:
             source_documents.append(

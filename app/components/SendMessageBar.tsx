@@ -13,13 +13,13 @@ const SendMessageBar = (props: {
         setQuery(event.target.value);
     };
 
-    const generateResponse = async (query) => {
+    const generateResponse = async (queryAndMessages) => {
         const res = await fetch("http://localhost:8000/api/generate-response", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(query),
+            body: JSON.stringify(queryAndMessages),
         });
         const response = await res.json();
         console.log(response);
@@ -31,10 +31,12 @@ const SendMessageBar = (props: {
             content: query,
             origin: "user",
         };
+        const pastMessages = props.messages.map((message) => message.content);
         props.setMessages((prevMessages) => [...prevMessages, userMessage]);
         try {
             const response = await generateResponse({
                 query: userMessage.content,
+                pastMessages: pastMessages,
             });
             const gptMessage: Message = {
                 content: response["result"],
