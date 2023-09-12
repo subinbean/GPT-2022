@@ -18,7 +18,7 @@ def generate_response():
             source_documents.append(
                 {'page_content': doc.page_content, 'metadata': doc.metadata})
         response = {
-            'result': generated_response['result'], 'source_documents': source_documents}
+            'result': generated_response['answer'], 'source_documents': source_documents}
         return jsonify(response), 200
     except Exception as e:
         print('An error occurred:', e, flush=True)
