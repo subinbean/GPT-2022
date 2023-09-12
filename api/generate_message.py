@@ -42,12 +42,23 @@ def generate_message(query, past_messages):
 
         # retrieves from vector store relevant documents and passes them as context to prompt
         # k is the number of documents retrieved
+        # qa_chain = ConversationalRetrievalChain.from_llm(
+        #     llm, retriever=vectorstore.as_retriever(search_kwargs={'k': 2}), return_source_documents=True)
         qa_chain = RetrievalQA.from_chain_type(
             llm, retriever=vectorstore.as_retriever(search_kwargs={'k': 2}), return_source_documents=True, chain_type_kwargs={"prompt": qa_chain_prompt})
 
         # print(qa_chain({"query": question}))
-        # print(past_messages, flush=True)
+        print(past_messages, flush=True)
+        if past_messages:
+            temp = []
+            for i in range(0, len(past_messages), 2):
+                print(i, flush=True)
+                temp.append((past_messages[i], past_messages[i + 1]))
+            past_messages = temp
+            print(past_messages, flush=True)
+
         return qa_chain({"query": query})
+        # return qa_chain({"question": query, "chat_history": past_messages})
 
     except Exception as e:
         print('An error occurred:', e)
