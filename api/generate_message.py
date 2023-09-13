@@ -55,9 +55,9 @@ def generate_message(query, past_messages):
             past_messages = temp
 
         # return qa_chain({"query": query})
-        print(past_messages, flush=True)
-        print(
-            qa_chain({"question": query, "chat_history": past_messages}), flush=True)
+        # print(past_messages, flush=True)
+        # print(
+        #     qa_chain({"question": query, "chat_history": past_messages}), flush=True)
         return qa_chain({"question": query, "chat_history": past_messages})
         # return qa_chain({"question": query, "chat_history": past_messages})
 

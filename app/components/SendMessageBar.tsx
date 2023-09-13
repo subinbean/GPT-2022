@@ -31,6 +31,7 @@ const SendMessageBar = (props: {
             content: query,
             origin: "user",
         };
+        setQuery("");
         const pastMessages = props.messages.map((message) => message.content);
         props.setMessages((prevMessages) => [...prevMessages, userMessage]);
         try {
@@ -57,6 +58,7 @@ const SendMessageBar = (props: {
                 value={query}
                 onChange={handleInputChange}
                 className="flex-1 p-3 rounded-l-lg focus:outline-none"
+                onKeyDown={(event) => event.key === "Enter" && sendMessage()}
             />
             <button
                 onClick={sendMessage}
