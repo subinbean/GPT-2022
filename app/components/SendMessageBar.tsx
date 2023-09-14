@@ -6,6 +6,8 @@ import { Message } from "../types/types";
 const SendMessageBar = (props: {
     messages: Message[];
     setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const [query, setQuery] = useState("");
 
@@ -35,6 +37,9 @@ const SendMessageBar = (props: {
         const pastMessages = props.messages.map((message) => message.content);
         props.setMessages((prevMessages) => [...prevMessages, userMessage]);
         try {
+            setTimeout(() => {
+                props.setLoading(true);
+            }, 600);
             const response = await generateResponse({
                 query: userMessage.content,
                 pastMessages: pastMessages,
@@ -44,6 +49,7 @@ const SendMessageBar = (props: {
                 origin: "gpt",
                 citations: response["source_documents"],
             };
+            props.setLoading(false);
             props.setMessages((prevMessages) => [...prevMessages, gptMessage]);
         } catch (error) {
             console.log(error);

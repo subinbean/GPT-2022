@@ -50,7 +50,7 @@ def generate_message(query, past_messages):
         if past_messages:
             temp = []
             for i in range(0, len(past_messages), 2):
-                print(i, flush=True)
+                # print(i, flush=True)
                 temp.append((past_messages[i], past_messages[i + 1]))
             past_messages = temp
 

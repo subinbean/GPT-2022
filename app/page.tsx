@@ -3,11 +3,13 @@
 import SendMessageBar from "@/app/components/SendMessageBar";
 import GPTMessage from "./components/GPTMessage";
 import UserMessage from "./components/UserMessage";
-import { useState, useEffect, use } from "react";
+import { useState } from "react";
 import { Message } from "./types/types";
+import Loading from "./components/Loading";
 
 export default function Page() {
     const [messages, setMessages] = useState<Message[]>([]);
+    const [loading, setLoading] = useState(false);
 
     return (
         <main className="flex h-screen flex-col items-center p-4">
@@ -23,8 +25,14 @@ export default function Page() {
                         />
                     )
                 )}
+                {loading && <Loading />}
             </div>
-            <SendMessageBar messages={messages} setMessages={setMessages} />
+            <SendMessageBar
+                messages={messages}
+                setMessages={setMessages}
+                loading={loading}
+                setLoading={setLoading}
+            />
         </main>
     );
 }
