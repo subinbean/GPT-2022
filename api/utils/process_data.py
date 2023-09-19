@@ -28,7 +28,7 @@ def ingest_file(pdf_path):
         print('docs loaded and split')
 
         # sanity check
-        with open('sample.txt', 'w') as file:
+        with open(f'{title}.txt', 'w') as file:
             for d in documents:
                 file.write(str(d))
                 file.write('\n --section--\n')
@@ -37,13 +37,13 @@ def ingest_file(pdf_path):
         embeddings = OpenAIEmbeddings()
 
         # pinecone
-        pinecone_setup.pinecone_setup()
-        index_name = os.environ.get("PINECONE_INDEX_NAME")
-        index = pinecone.Index(index_name)
-        print('creating embeddings and storing in pinecone')
-        Pinecone.from_documents(documents, embeddings,
-                                index_name=index_name, namespace=title)
-        print('Done!')
+        # pinecone_setup.pinecone_setup()
+        # index_name = os.environ.get("PINECONE_INDEX_NAME")
+        # index = pinecone.Index(index_name)
+        # print('creating embeddings and storing in pinecone')
+        # Pinecone.from_documents(documents, embeddings,
+        #                         index_name=index_name, namespace=title)
+        # print('Done!')
 
     except Exception as e:
         print('An error occurred:', e)
