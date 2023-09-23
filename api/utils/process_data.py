@@ -39,8 +39,11 @@ def ingest_file(pdf_path):
         pinecone_setup.pinecone_setup()
         index_name = os.environ.get("PINECONE_INDEX_NAME")
         print('creating embeddings and storing in pinecone')
-        Pinecone.from_documents(documents, embeddings,
-                                index_name=index_name, namespace=title)
+
+        # upserting by chunks to try and avoid pinecone errors
+        for i in range(0, len(documents), 50):
+            Pinecone.from_documents(documents[i:i + 50], embeddings,
+                                    index_name=index_name, namespace=title)
         print('Done!')
 
     except Exception as e:
