@@ -13,7 +13,7 @@ load_dotenv()
 def ingest_file(pdf_path):
     try:
         # extract title of pdf
-        title = re.findall(r'/([^/]+)\.pdf$', pdf_path)[0]
+        title = re.search(r'([A-Za-z]+)-', pdf_path).group(1).lower()
         print(title)
         loader = PyPDFLoader(pdf_path)
         raw_file = loader.load()
