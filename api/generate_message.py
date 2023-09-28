@@ -12,6 +12,12 @@ import pinecone
 load_dotenv()
 
 
+def get_list_names():
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            ingest_file(os.path.join(root, file))
+
+
 def generate_message(query, past_messages):
     try:
         # creates open AI chat model using gpt 3.5 turbo (which is what chat gpt uses)
