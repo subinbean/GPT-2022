@@ -8,14 +8,20 @@ import os
 from api.utils import pinecone_setup
 from dotenv import load_dotenv
 import pinecone
+import re
 
 load_dotenv()
 
 
-def get_list_names():
+def get_list_file_names():
+    file_names = []
+    folder_path = 'assets'
     for root, _, files in os.walk(folder_path):
         for file in files:
-            ingest_file(os.path.join(root, file))
+            file_path = os.path.join(root, file)
+            file_names.append(
+                re.search(r'([A-Za-z]+)-', file_path).group(1).lower())
+    return file_names
 
 
 def generate_message(query, past_messages):
@@ -23,6 +29,9 @@ def generate_message(query, past_messages):
         # creates open AI chat model using gpt 3.5 turbo (which is what chat gpt uses)
         # set temperature to whatever you want depending on how random / creative you want answers to be
         llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
+
+        # checking if file names are fetched properly
+        print(get_list_file_names())
 
         # set up pinecone vectorestore for retrieval
         pinecone_setup.pinecone_setup()
