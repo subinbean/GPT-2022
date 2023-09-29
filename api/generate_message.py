@@ -30,8 +30,10 @@ def generate_message(query, past_messages):
         # set temperature to whatever you want depending on how random / creative you want answers to be
         llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
 
-        # checking if file names are fetched properly
-        print(get_list_file_names())
+        # # checking if file names are fetched properly
+        # print(get_list_file_names(), flush=True)
+
+        # name_list = get_list_file_names()
 
         # set up pinecone vectorestore for retrieval
         pinecone_setup.pinecone_setup()
@@ -39,7 +41,7 @@ def generate_message(query, past_messages):
         index = pinecone.Index(index_name)
         embeddings = OpenAIEmbeddings()
         vectorstore = Pinecone(
-            index, embedding=embeddings, namespace="Apple-10k-2022", text_key="text")
+            index, embedding=embeddings, text_key="text")
 
         # sanity check for retrieval
         # question = "What are some highlights for the fourth quarter of 2022?"
