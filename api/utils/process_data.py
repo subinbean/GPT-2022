@@ -43,7 +43,7 @@ def ingest_file(pdf_path):
         # upserting by chunks to try and avoid pinecone errors
         for i in range(0, len(documents), 50):
             Pinecone.from_documents(documents[i:i + 50], embeddings,
-                                    index_name=index_name)
+                                    index_name=index_name, namespace=title)
         print('Done!')
 
     except Exception as e:
