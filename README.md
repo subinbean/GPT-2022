@@ -8,6 +8,10 @@ GPT 2022 is a GPT 3.5-turbo Chatbot with knowledge of 2022 events. It uses retri
 
 The stack used for this project is: for the frontend, Next.js, TailwindCSS, and React are used. For the backend, Flask is used along with the langchain library for AI-related logic. Finally, Pinecone is used as a vector database storing embeddings of documents.
 
+## Points of improvement (todo)
+
+-   Currently uses RAG for all questions (even ones that aren't really necessary)
+
 ## Helpful Resources
 
 -   https://python.langchain.com/docs/use_cases/question_answering/
