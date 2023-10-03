@@ -1,7 +1,6 @@
 from langchain.chat_models import ChatOpenAI
 from langchain.vectorstores import Pinecone
 from langchain.embeddings import OpenAIEmbeddings
-# from langchain.chains import RetrievalQA
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
 import os
@@ -33,19 +32,19 @@ def generate_message(query, past_messages):
         # print(docs)
 
         # template used to prompt the model
-        template = """Use the following pieces of context to answer the question at the end. 
-        If you don't know the answer, just say that you don't know, don't try to make up an answer.
-        Always say "thanks for asking!" at the end of the answer. 
-        {context}
-        Question: {question}
-        Helpful Answer:"""
+        template = """Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in its original language. At the end of standalone question add this: 'Always say "thanks for asking!" at the end of the answer.'
 
-        qa_chain_prompt = PromptTemplate.from_template(template)
+        Chat History:
+        {chat_history}
+        Follow Up Input: {question}
+        Standalone question:"""
+
+        custom_prompt = PromptTemplate.from_template(template)
 
         # retrieves from vector store relevant documents and passes them as context to prompt
         # k is the number of documents retrieved
         qa_chain = ConversationalRetrievalChain.from_llm(
-            llm, retriever=vectorstore.as_retriever(search_kwargs={'k': 2}), return_source_documents=True)
+            llm, retriever=vectorstore.as_retriever(search_kwargs={'k': 2}), condense_question_prompt=custom_prompt, return_source_documents=True)
 
         # data transform for past messages (list of messages -> tuple of)
         if past_messages:
